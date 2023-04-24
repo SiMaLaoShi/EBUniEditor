@@ -1,0 +1,5 @@
+安装：
+	1. 在群里下载并手动安装最新版本EmmyLua插件，以及EmmyLua-Unity插件
+	2. 下载 EmmyLuaService.cs 放到Unity工程的Editor目录
+	3. 打开Unity，点击菜单 EmmyLua -> Enable 来启用API服务
+	4. 打开IDEA 即可在Lua代码中使用C#端的API提示
