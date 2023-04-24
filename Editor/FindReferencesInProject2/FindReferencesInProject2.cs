@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using EBA.Ebunieditor.Editor.Common;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public static class FindReferencesInProject2
 {
@@ -40,8 +42,8 @@ public static class FindReferencesInProject2
         }
         else
         {
-            var dir = Path.Combine(Environment.CurrentDirectory,
-                @"Packages\com.eba.ebunieditor\Editor\FindReferencesInProject2\");
+            
+            var dir = Path.GetFullPath(@"Packages\com.eba.ebunieditor\Editor\FindReferencesInProject2");
             psi.FileName = Path.Combine(dir, "rg.exe");
             psi.Arguments = string.Format("--case-sensitive --follow --files-with-matches --no-text --fixed-strings " +
                                           "--ignore-file {3}ignore.txt " +
