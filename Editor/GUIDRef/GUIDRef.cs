@@ -69,7 +69,7 @@ public class GUIDRefCache
     private string outFile_data_js  {   get     {   return outRoot + "data.js";   }   }
     private string outFile_index    {   get     {   return outRoot + "index.html";   }   }
 
-    private string guidEditorWebRoot    = Path.GetFullPath(@"Packages\com.eba.ebunieditor\Editor\GUIDRef\web");
+    private string guidEditorWebRoot    = Path.GetFullPath(@"Packages\com.eba.ebunieditor\Editor\GUIDRef\web\");
     private string[] copys = new string[]
         {   "index.html", 
             "app_data.javascript", "app_view.javascript", "config.javascript", "jquery.javascript", "main.javascript",
