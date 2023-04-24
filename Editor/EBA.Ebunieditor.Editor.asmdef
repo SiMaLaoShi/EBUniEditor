@@ -2,13 +2,13 @@
     "name": "EBA.Ebunieditor.Editor",
     "rootNamespace": "",
     "references": [
-        "Undefined.Ebunieditor"
+        "EBA.Ebunieditor"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
