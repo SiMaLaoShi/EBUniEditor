@@ -1,0 +1,11 @@
+{
+    "name": "Undefined.Ebunieditor.Tests",
+    "references": [
+        "Undefined.Ebunieditor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}
