@@ -5,6 +5,9 @@
 //
 // -----------------------------------------------------------------------------
 
+using EBA.Ebunieditor;
+using UnityEngine;
+
 namespace Undefined.Ebunieditor
 {
     /// <summary>
