@@ -20,6 +20,11 @@ namespace EBA.Ebunieditor.Editor.Common
             EditorUtility.ClearProgressBar();
         }
 
+        public static string GetEBEditorUpmRootPath()
+        {
+            return Path.GetFullPath(@"Packages\com.eba.ebunieditor\");
+        }
+
         public static void UpdateProgress(int progress, int progressMax, string desc)
         {
             var title = "Processing...[" + progress + " - " + progressMax + "]";

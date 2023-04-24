@@ -36,7 +36,9 @@ __________#_______####_______####______________
 #if UNITY_EDITOR_WIN || USE_LUA_PROFILER
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using EBA.Ebunieditor.Editor.Common;
 using UnityEngine;
 
 namespace MikuLuaProfiler
@@ -81,12 +83,12 @@ namespace MikuLuaProfiler
             if (!Application.isPlaying) return;
 #endif
 #if UNITY_EDITOR_WIN
-            string path = null;
-            var files = System.IO.Directory.GetFiles(Application.dataPath, "EasyHook64.bin", System.IO.SearchOption.AllDirectories);
-            if (files.Length > 0)
-            {
-                path = files[0];
-            }
+            string path = Path.Combine(CommonUtility.GetEBEditorUpmRootPath(), @"Editor\LuaProfiler\Plugins\EasyHook64.bin");
+            // var files = System.IO.Directory.GetFiles(Application.dataPath, "EasyHook64.bin", System.IO.SearchOption.AllDirectories);
+            // if (files.Length > 0)
+            // {
+            //     path = files[0];
+            // }
             if (!string.IsNullOrEmpty(path))
             {
                 IntPtr ptr = LoadLibrary(path);
