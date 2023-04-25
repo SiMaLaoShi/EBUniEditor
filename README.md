@@ -161,6 +161,12 @@ Lua崽必备，食用指南 [LuaProfiler](https://github.com/leinlin/Miku-LuaPro
 
 食用指南 [UGUI-Editor](https://github.com/liuhaopen/UGUI-Editor.git)
 
+### 自定义内置的Inspector
+
+这个只是方便我们一键设置某种asset的属性，当然也可以自己在资源管线内去做这种处理。
+
+![image-20230425173511361](Documentation/images/image-20230425173511361.png)
+
 ### 其他
 
 ![image-20230425101045163](Documentation/images/image-20230425101045163.png)
