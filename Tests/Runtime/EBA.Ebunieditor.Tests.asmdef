@@ -1,0 +1,11 @@
+{
+    "name": "EBA.Ebunieditor.Tests",
+    "references": [
+        "EBA.Ebunieditor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

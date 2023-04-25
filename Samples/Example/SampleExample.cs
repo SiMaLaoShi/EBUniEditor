@@ -5,10 +5,9 @@
 //
 // -----------------------------------------------------------------------------
 
-using EBA.Ebunieditor;
 using UnityEngine;
 
-namespace Undefined.Ebunieditor
+namespace EBA.Ebunieditor
 {
     /// <summary>
     /// Provide a general description of the public class.
