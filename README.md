@@ -171,4 +171,8 @@ Lua崽必备，食用指南 [LuaProfiler](https://github.com/leinlin/Miku-LuaPro
 
 - **[PlayerPrefsEditor](https://github.com/sabresaurus/PlayerPrefsEditor)**一个管理Unity持久化数据的插件
 - git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.9.4 Unity的hotReload方案
+- [UnityHeapExplorer](https://github.com/pschraut/UnityHeapExplorer)
+- [ProjectAuditor](https://github.com/pschraut/UnityHeapExplorer)
+- [UnityAssetDanshari](https://github.com/akof1314/UnityAssetDanshari)
+- [UnityAssetUsageDetector](https://github.com/yasirkula/UnityAssetUsageDetector)
 
