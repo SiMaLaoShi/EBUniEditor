@@ -6,11 +6,6 @@ using EBA.Ebunieditor.Editor.Common;
 using MonoHook;
 using UnityEditor;
 using UnityEngine;
-
-#if UNITY_EDITOR
-
-#endif
-
 namespace EBA.Ebunieditor.Editor.EditorHook
 {
 #if UNITY_EDITOR
@@ -23,7 +18,7 @@ namespace EBA.Ebunieditor.Editor.EditorHook
         {
             get
             {
-                if (!GlobalScriptableObject.Instance.isHookApplication)
+                if (!GlobalScriptableObject.Instance.isHookStreamingAssetsPath)
                     return oldStreamingAssetsPath;
                 var p = GlobalScriptableObject.Instance.strRemoteStreamingAssetsPath;
                 return p == "" ? oldStreamingAssetsPath : p;
@@ -34,7 +29,7 @@ namespace EBA.Ebunieditor.Editor.EditorHook
         {
             get
             {
-                if (!GlobalScriptableObject.Instance.isHookApplication)
+                if (!GlobalScriptableObject.Instance.isHookPersistentDataPath)
                     return oldPersistentDataPath;
                 var p = GlobalScriptableObject.Instance.strRemotePersistentDataPath;
                 return p == "" ? oldPersistentDataPath : p;
