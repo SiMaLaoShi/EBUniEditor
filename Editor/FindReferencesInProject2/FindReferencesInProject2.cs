@@ -46,7 +46,7 @@ public static class FindReferencesInProject2
             var dir = Path.GetFullPath(@"Packages\com.eba.ebunieditor\Editor\FindReferencesInProject2");
             psi.FileName = Path.Combine(dir, "rg.exe");
             psi.Arguments = string.Format("--case-sensitive --follow --files-with-matches --no-text --fixed-strings " +
-                                          "--ignore-file {3}ignore.txt " +
+                                          "--ignore-file {3}\\ignore.txt " +
                                           "--threads {0} --regexp {1} -- {2}",
                 cpuCount, selectedAssetGUID, appDataPath, dir);
         }
