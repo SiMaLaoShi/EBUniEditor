@@ -143,6 +143,19 @@ namespace EBA.Ebunieditor.Editor.Subversion
             arg += "\"";
             SvnCommandRun(arg);
         }
+        
+        [MenuItem("Assets/SVN Tool/显示日志（Meta）")]
+        private static void SvnToolMetaLog()
+        {
+            var assetPaths = CommonUtility.GetSelectionAssetPaths();
+            if (assetPaths.Count == 0) return;
+
+            // 显示日志，只能对单一资产
+            var arg = "/command:log /closeonend:0 /path:\"";
+            arg += $"{assetPaths[0]}.meta";
+            arg += "\"";
+            SvnCommandRun(arg);
+        }
 
         [MenuItem("Assets/SVN Tool/检查修改")]
         private static void SvnCheckModify()
@@ -192,7 +205,7 @@ namespace EBA.Ebunieditor.Editor.Subversion
         ///     SVN命令运行
         /// </summary>
         /// <param name="arg"></param>
-        private static void SvnCommandRun(string arg)
+        public static void SvnCommandRun(string arg)
         {
             var workDirectory =
                 Application.dataPath.Remove(Application.dataPath.LastIndexOf("/Assets", StringComparison.Ordinal));
