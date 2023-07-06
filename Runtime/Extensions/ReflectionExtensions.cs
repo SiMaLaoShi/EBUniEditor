@@ -1,4 +1,4 @@
-﻿namespace EBA.Ebunieditor.Editor.Extensions
+﻿namespace EBA.Runtime.Extensions
 {
     using System;
     using System.Reflection;
