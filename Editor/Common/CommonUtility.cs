@@ -12,6 +12,17 @@ namespace EBA.Ebunieditor.Editor.Common
 {
     public partial class CommonUtility
     {
+        
+        public static T AttachUniqueComponent<T>(GameObject go) where T : Component
+        {
+            if ((UnityEngine.Object) null == (UnityEngine.Object) go)
+                return default (T);
+            T obj = go.GetComponent<T>();
+            if ((UnityEngine.Object) null == (UnityEngine.Object) obj)
+                obj = go.AddComponent<T>();
+            return obj;
+        }
+        
         public const BindingFlags BindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 

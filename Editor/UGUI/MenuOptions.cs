@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using EBA.Ebunieditor.Editor.Common;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -215,12 +216,17 @@ namespace UnityEditor.UI
 
         private static void InitText(Text text)
         {
-            text.font = AssetDatabase.LoadAssetAtPath<Font>("Assets/AssetFolder/GUIAsset/Fonts/fzbwk.ttf");
-            text.fontSize = 30;
-            text.color = Color.black;
+            if (GlobalScriptableObject.Instance.font == null)
+            {
+                Debug.LogError($"请先设置GlobalScriptableObject的Font");
+                return;
+            }
+            text.font = GlobalScriptableObject.Instance.font;
+            text.fontSize = GlobalScriptableObject.Instance.fontSize;
+            text.color = GlobalScriptableObject.Instance.textDefaultColor;
             text.fontStyle = FontStyle.Normal;
             text.alignment = TextAnchor.MiddleCenter;
-            text.text = "1211";
+            text.text = GlobalScriptableObject.Instance.textDefault;
             text.raycastTarget = false;
         }
 
@@ -379,13 +385,29 @@ namespace UnityEditor.UI
         [MenuItem(MYBUTTONKEY, false, 1015)]
         public static void CreateButton(MenuCommand menuCommand)
         {
-            // CreatButtonCore(false, menuCommand);
+            var go = new GameObject("Btn_");
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            if (go.transform.parent as RectTransform)
+            {
+                CommonUtility.AttachUniqueComponent<Button>(go);
+                CommonUtility.AttachUniqueComponent<NoDrawingRayCast>(go);
+                CommonUtility.AttachUniqueComponent<CanvasRenderer>(go);
+            }
+
+            Selection.activeGameObject = go;
         }
 
         [MenuItem(MYBUTTONIMGKEY, false, 1016)]
         public static void CreateButtonImage(MenuCommand menuCommand)
         {
-            // CreatButtonCore(true, menuCommand);
+            var go = new GameObject("Btn_");
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            if (go.transform.parent as RectTransform)
+            {
+                var button = CommonUtility.AttachUniqueComponent<Button>(go);
+                CommonUtility.AttachUniqueComponent<Image>(go);
+            }
+            Selection.activeGameObject = go;
         }
 
         // Helper methods
