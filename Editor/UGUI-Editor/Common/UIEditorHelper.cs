@@ -726,11 +726,11 @@ namespace U3DExtends
         {
             if (string.IsNullOrEmpty(guid)) return null;
 
-            if (s_GetInstanceIDFromGUID == null)
-                s_GetInstanceIDFromGUID = typeof(AssetDatabase).GetMethod("GetInstanceIDFromGUID", BindingFlags.Static | BindingFlags.NonPublic);
+            // if (s_GetInstanceIDFromGUID == null)
+            //     s_GetInstanceIDFromGUID = typeof(AssetDatabase).GetMethod("GetInstanceIDFromGUID", BindingFlags.Static | BindingFlags.NonPublic);
 
-            int id = (int)s_GetInstanceIDFromGUID.Invoke(null, new object[] { guid });
-            if (id != 0) return EditorUtility.InstanceIDToObject(id);
+            // int id = (int)s_GetInstanceIDFromGUID.Invoke(null, new object[] { guid });
+            // if (id != 0) return EditorUtility.InstanceIDToObject(id);
             string path = AssetDatabase.GUIDToAssetPath(guid);
             if (string.IsNullOrEmpty(path)) return null;
             return AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
