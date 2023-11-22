@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //参考 https://blog.csdn.net/weixin_33943347/article/details/89591903
 namespace EBA.Runtime.UGUI
 {
+    [RequireComponent(typeof(CanvasRenderer))]
     public class NoDrawingRayCast : Graphic
     {
         protected NoDrawingRayCast()
