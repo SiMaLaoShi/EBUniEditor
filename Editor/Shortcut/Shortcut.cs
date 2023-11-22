@@ -119,21 +119,21 @@ namespace EBA.Ebunieditor.Editor.Shortcut
         private static void NotePadPlusPlusRun()
         {
             var assetPaths = CommonUtility.GetSelectionAssetPaths(true);
-            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.Instance.strNotePadPpPath);
+            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.instance.strNotePadPpPath);
         }
 
         [MenuItem("Assets/Open By/Sublime Text")]
         private static void SublimeTextRun()
         {
             var assetPaths = CommonUtility.GetSelectionAssetPaths(true);
-            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.Instance.strSublimePath);
+            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.instance.strSublimePath);
         }
 
         [MenuItem("Assets/Open By/NotePad")]
         private static void NotePadRun()
         {
             var assetPaths = CommonUtility.GetSelectionAssetPaths(true);
-            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.Instance.strNotePad);
+            OsRun(string.Join(" ", assetPaths.ToArray()), GlobalScriptableObject.instance.strNotePad);
         }
     
         [MenuItem("Assets/Open By/NotePad打开.Meta(选一个)")]
@@ -141,7 +141,7 @@ namespace EBA.Ebunieditor.Editor.Shortcut
         {
             var guids = Selection.assetGUIDs;
             if (guids.Length == 1)
-                OsRun(Environment.CurrentDirectory + "/" + AssetDatabase.GUIDToAssetPath(guids[0]) + ".meta", GlobalScriptableObject.Instance.strNotePad);
+                OsRun(Environment.CurrentDirectory + "/" + AssetDatabase.GUIDToAssetPath(guids[0]) + ".meta", GlobalScriptableObject.instance.strNotePad);
         }
 
         private static void OsRun(string args, string exePath)

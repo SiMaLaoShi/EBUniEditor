@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace EBA.Ebunieditor.Editor.Common
 {
-    public class GlobalScriptableObject : BaseScriptable<GlobalScriptableObject>
+    public class GlobalScriptableObject : ScriptableSingleton<GlobalScriptableObject>
     {
         [Header("第三方程序路径相关")]
         public string strNotePad = @"notepad.exe";

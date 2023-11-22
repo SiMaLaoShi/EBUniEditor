@@ -18,9 +18,9 @@ namespace EBA.Ebunieditor.Editor.EditorHook
         {
             get
             {
-                if (!GlobalScriptableObject.Instance.isHookStreamingAssetsPath)
+                if (!GlobalScriptableObject.instance.isHookStreamingAssetsPath)
                     return oldStreamingAssetsPath;
-                var p = GlobalScriptableObject.Instance.strRemoteStreamingAssetsPath;
+                var p = GlobalScriptableObject.instance.strRemoteStreamingAssetsPath;
                 return p == "" ? oldStreamingAssetsPath : p;
             }
         }
@@ -29,9 +29,9 @@ namespace EBA.Ebunieditor.Editor.EditorHook
         {
             get
             {
-                if (!GlobalScriptableObject.Instance.isHookPersistentDataPath)
+                if (!GlobalScriptableObject.instance.isHookPersistentDataPath)
                     return oldPersistentDataPath;
-                var p = GlobalScriptableObject.Instance.strRemotePersistentDataPath;
+                var p = GlobalScriptableObject.instance.strRemotePersistentDataPath;
                 return p == "" ? oldPersistentDataPath : p;
             }
         }
@@ -56,7 +56,7 @@ namespace EBA.Ebunieditor.Editor.EditorHook
         public static void OnStartGame()
         {
             EditorApplication.playModeStateChanged += OnPlayerModeStateChanged;
-            if (!GlobalScriptableObject.Instance.isHookApplication)
+            if (!GlobalScriptableObject.instance.isHookApplication)
                 return;
 
             List<HookInfo> hookInfos = new List<HookInfo>()

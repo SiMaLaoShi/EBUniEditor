@@ -217,17 +217,17 @@ namespace UnityEditor.UI
 
         private static void InitText(Text text)
         {
-            if (GlobalScriptableObject.Instance.font == null)
+            if (GlobalScriptableObject.instance.font == null)
             {
                 Debug.LogError($"请先设置GlobalScriptableObject的Font");
                 return;
             }
-            text.font = GlobalScriptableObject.Instance.font;
-            text.fontSize = GlobalScriptableObject.Instance.fontSize;
-            text.color = GlobalScriptableObject.Instance.textDefaultColor;
+            text.font = GlobalScriptableObject.instance.font;
+            text.fontSize = GlobalScriptableObject.instance.fontSize;
+            text.color = GlobalScriptableObject.instance.textDefaultColor;
             text.fontStyle = FontStyle.Normal;
             text.alignment = TextAnchor.MiddleCenter;
-            text.text = GlobalScriptableObject.Instance.textDefault;
+            text.text = GlobalScriptableObject.instance.textDefault;
             text.raycastTarget = false;
         }
 
