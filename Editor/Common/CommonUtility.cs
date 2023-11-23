@@ -453,5 +453,21 @@ namespace EBA.Ebunieditor.Editor.Common
 
             return colors;
         }
+        
+        // 使用自定义格式化
+        public static string FormatVector3(Vector3 vector, string format = "({0:F2}, {1:F2}, {2:F2})")
+        {
+            return string.Format(format, vector.x, vector.y, vector.z);
+        }
+        
+        public static string FormatVector2(Vector2 vector, string format = "({0:F2}, {1:F2})")
+        {
+            return string.Format(format, vector.x, vector.y);
+        }
+        
+        public static string FormatVector4(Vector4 vector, string format = "({0:F2}, {1:F2}, {2:F2}, {3:F3})")
+        {
+            return string.Format(format, vector.x, vector.y, vector.z, vector.w);
+        }
     }
 }

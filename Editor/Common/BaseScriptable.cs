@@ -5,12 +5,12 @@ namespace EBA.Ebunieditor.Editor.Common
 {
     public class BaseScriptable<T>: ScriptableObject where T: ScriptableObject
     {
-        private static T instance;
-        public static T Instance
+        private static T _instance;
+        public static T instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     var name = typeof(T).Name;
                     var path = string.Format("Assets/SO/{0}.asset", name);
@@ -20,15 +20,17 @@ namespace EBA.Ebunieditor.Editor.Common
                         AssetDatabase.SaveAssets();
                         AssetDatabase.Refresh();
                     }
-                    instance = AssetDatabase.LoadAssetAtPath<T>(path);
-                    if (instance == null)
+
+                    _instance = AssetDatabase.LoadAssetAtPath<T>(path);
+                    if (_instance == null)
                     {
-                        instance = CreateInstance<T>();
-                        instance.name = name;
-                        AssetDatabase.CreateAsset(instance, path);
+                        _instance = CreateInstance<T>();
+                        _instance.name = name;
+                        AssetDatabase.CreateAsset(_instance, path);
                     }
                 }
-                return instance;
+
+                return _instance;
             }
         }
     }

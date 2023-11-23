@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EBA.Ebunieditor.Editor.Common
 {
-    public class GlobalScriptableObject : ScriptableSingleton<GlobalScriptableObject>
+    public class GlobalScriptableObject : BaseScriptable<GlobalScriptableObject>
     {
         [Header("第三方程序路径相关")]
         public string strNotePad = @"notepad.exe";
@@ -23,5 +23,8 @@ namespace EBA.Ebunieditor.Editor.Common
         public int fontSize = 30;
         public string textDefault = "New Text";
         public Color textDefaultColor = Color.white;
+        public string Vector4Fmt = "({0:F2}, {1:F2}, {2:F2}), {3:F2}";
+        public string Vector3Fmt = "({0:F2}, {1:F2}, {2:F2})";
+        public string Vector2Fmt = "({0:F2}, {1:F2})";
     }
 }
