@@ -18,7 +18,7 @@ namespace EBUniEditor.Editor.Inspector
 
         void OnDestroy()
         {
-            EditorApplication.update -= onEditorApplicationUpdate;
+            EditorApplication.update -= OnEditorApplicationUpdate;
         }
 
         public override void OnInspectorGUI()
@@ -31,6 +31,8 @@ namespace EBUniEditor.Editor.Inspector
 
             mOldEditor.OnInspectorGUI();
 
+            if (!GlobalScriptableObject.instance.isShowRectTransformExtension) 
+                return;
             var lineStyle = new GUIStyle();
             lineStyle.normal.background = EditorGUIUtility.whiteTexture;
             lineStyle.stretchWidth = true;
@@ -115,8 +117,6 @@ namespace EBUniEditor.Editor.Inspector
 
             EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
             
-            
-            
             EditorGUILayout.LabelField("Locked Scaling Ratio");
 
             var rect = EditorGUILayout.GetControlRect(false);
@@ -128,8 +128,8 @@ namespace EBUniEditor.Editor.Inspector
             {
                 if (!mIsBoundEditorUpdate)
                 {
-                    EditorApplication.update -= onEditorApplicationUpdate;
-                    EditorApplication.update += onEditorApplicationUpdate;
+                    EditorApplication.update -= OnEditorApplicationUpdate;
+                    EditorApplication.update += OnEditorApplicationUpdate;
 
                     mCacheDeltaSizeRatio = (concertTarget.sizeDelta.y / concertTarget.sizeDelta.x + 0.00001f);
                 }
@@ -138,7 +138,7 @@ namespace EBUniEditor.Editor.Inspector
             {
                 if (mIsBoundEditorUpdate)
                 {
-                    EditorApplication.update -= onEditorApplicationUpdate;
+                    EditorApplication.update -= OnEditorApplicationUpdate;
                     mIsBoundEditorUpdate = false;
                 }
             }
@@ -146,7 +146,7 @@ namespace EBUniEditor.Editor.Inspector
             EditorGUILayout.EndHorizontal();
         }
 
-        void onEditorApplicationUpdate()
+        void OnEditorApplicationUpdate()
         {
             mIsBoundEditorUpdate = true;
 
