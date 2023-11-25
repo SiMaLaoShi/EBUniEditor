@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using EBA.Ebunieditor.Editor.Common;
 using UnityEditor;
 using UnityEngine;
@@ -6,10 +7,9 @@ using UnityEngine;
 namespace EBUniEditor.Editor.Inspector
 {
     [CustomEditor(typeof(RectTransform))]
-    public class RectTransformInspectorExtension : UnityEditor.Editor
+    public class RectTransformInspectorExtension : UnityProvideEditor 
     {
-        UnityEditor.Editor mOldEditor;
-
+        
         float mCacheDeltaSizeRatio;
 
         bool mIsLockedScalingRatio;
@@ -20,19 +20,18 @@ namespace EBUniEditor.Editor.Inspector
         {
             EditorApplication.update -= OnEditorApplicationUpdate;
         }
+        
+        protected override UnityProvideEditorType EditorType => UnityProvideEditorType.RectTransformEditor;
 
         public override void OnInspectorGUI()
         {
-            var editorAssembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
-            var type = editorAssembly.GetType("UnityEditor.RectTransformEditor");
-
-            if (mOldEditor == null)
-                mOldEditor = CreateEditor(target, type);
-
-            mOldEditor.OnInspectorGUI();
-
+            base.OnInspectorGUI();
             if (!GlobalScriptableObject.instance.isShowRectTransformExtension) 
-                return;
+                DrawRectTransformInspectorExtension();
+        }
+
+        void DrawRectTransformInspectorExtension()
+        {
             var lineStyle = new GUIStyle();
             lineStyle.normal.background = EditorGUIUtility.whiteTexture;
             lineStyle.stretchWidth = true;
@@ -151,6 +150,8 @@ namespace EBUniEditor.Editor.Inspector
             mIsBoundEditorUpdate = true;
 
             var concertTarget = target as RectTransform;
+            if (concertTarget == null)
+                return;
             var y = concertTarget.sizeDelta.x * mCacheDeltaSizeRatio;
             concertTarget.sizeDelta = new Vector2(concertTarget.sizeDelta.x, y);
         }
