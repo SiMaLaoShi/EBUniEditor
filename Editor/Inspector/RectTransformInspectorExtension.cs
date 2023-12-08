@@ -26,7 +26,7 @@ namespace EBUniEditor.Editor.Inspector
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            if (!GlobalScriptableObject.instance.isShowRectTransformExtension) 
+            if (GlobalScriptableObject.instance.isShowRectTransformExtension) 
                 DrawRectTransformInspectorExtension();
         }
 
