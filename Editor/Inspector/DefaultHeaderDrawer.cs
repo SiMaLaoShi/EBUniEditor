@@ -88,17 +88,7 @@ public static class DefaultHeaderDrawer
     static void OnComponentSelected(object arg)
     {
         var component = (Component) arg;
-        srcComponentsDic.TryGetValue(component.GetType(), out var c);
-        if (c == null)
-            srcComponentsDic.Add(component.GetType(), component);
-        else
-        {
-            if (component == c)
-                srcComponentsDic.Remove(component.GetType());
-            else
-                srcComponentsDic[component.GetType()] = component;
-        }
-            
+        srcComponentsDic[component.GetType()] = component;
     }
 
     static void OnSequenceSelected(object arg)
