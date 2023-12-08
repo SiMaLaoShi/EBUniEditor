@@ -114,35 +114,35 @@ namespace EBUniEditor.Editor.Inspector
 
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+            // EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
             
-            EditorGUILayout.LabelField("Locked Scaling Ratio");
+            // EditorGUILayout.LabelField("Locked Scaling Ratio");
 
-            var rect = EditorGUILayout.GetControlRect(false);
-            var xMax = rect.xMax;
-            rect.xMin = xMax - Mathf.Min(149, rect.width);
-            mIsLockedScalingRatio = GUI.Toggle(rect, mIsLockedScalingRatio, "Locked", EditorStyles.miniButton);
+            // var rect = EditorGUILayout.GetControlRect(false);
+            // var xMax = rect.xMax;
+            // rect.xMin = xMax - Mathf.Min(149, rect.width);
+            // mIsLockedScalingRatio = GUI.Toggle(rect, mIsLockedScalingRatio, "Locked", EditorStyles.miniButton);
+            //
+            // if (mIsLockedScalingRatio)
+            // {
+            //     if (!mIsBoundEditorUpdate)
+            //     {
+            //         EditorApplication.update -= OnEditorApplicationUpdate;
+            //         EditorApplication.update += OnEditorApplicationUpdate;
+            //
+            //         mCacheDeltaSizeRatio = (concertTarget.sizeDelta.y / concertTarget.sizeDelta.x + 0.00001f);
+            //     }
+            // }
+            // else
+            // {
+            //     if (mIsBoundEditorUpdate)
+            //     {
+            //         EditorApplication.update -= OnEditorApplicationUpdate;
+            //         mIsBoundEditorUpdate = false;
+            //     }
+            // }
 
-            if (mIsLockedScalingRatio)
-            {
-                if (!mIsBoundEditorUpdate)
-                {
-                    EditorApplication.update -= OnEditorApplicationUpdate;
-                    EditorApplication.update += OnEditorApplicationUpdate;
-
-                    mCacheDeltaSizeRatio = (concertTarget.sizeDelta.y / concertTarget.sizeDelta.x + 0.00001f);
-                }
-            }
-            else
-            {
-                if (mIsBoundEditorUpdate)
-                {
-                    EditorApplication.update -= OnEditorApplicationUpdate;
-                    mIsBoundEditorUpdate = false;
-                }
-            }
-
-            EditorGUILayout.EndHorizontal();
+            // EditorGUILayout.EndHorizontal();
         }
 
         void OnEditorApplicationUpdate()
