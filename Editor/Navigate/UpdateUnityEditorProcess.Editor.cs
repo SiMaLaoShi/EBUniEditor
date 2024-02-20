@@ -14,7 +14,7 @@
         private int processId = 0;
         private IntPtr hwCurr = IntPtr.Zero;
         private static StringBuilder sbtitle = new StringBuilder(255);
-        private static string UTitle = System.Environment.CurrentDirectory;
+        private static string UTitle = Application.dataPath;
         public static float lasttime = 0;
 
         private static UpdateUnityEditorProcess _instance;
@@ -47,8 +47,7 @@
                 string[] ss = strTitle.Split('-');
                 if (ss.Length > 0 && !strTitle.Contains(UTitle))
                 {
-                    // SetWindowText(hwnd.ToInt32(), $"{UTitle} - {strTitle}");
-                    SetWindowText(hwnd.ToInt32(), $"{UTitle}");
+                    SetWindowText(hwnd.ToInt32(), string.Format("{0} - {1}", UTitle, strTitle));
                     UnityEngine.Debug.Log("Current Unity Title: " + UTitle);
                 }
             }
