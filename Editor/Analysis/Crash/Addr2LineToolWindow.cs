@@ -1,4 +1,6 @@
-﻿namespace EBA.Ebunieditor.Editor.Analysis.Crash
+﻿using System;
+
+namespace EBA.Ebunieditor.Editor.Analysis.Crash
 {
     using UnityEngine;
     using UnityEditor;
@@ -15,6 +17,20 @@
         {
             Addr2LineToolWindow window = (Addr2LineToolWindow)EditorWindow.GetWindow(typeof(Addr2LineToolWindow));
             window.Show();
+        }
+
+        private void OnEnable()
+        {
+            _soFilePath = EditorPrefs.GetString("Addr2Line_SOFilePath");
+            _logFilePath = EditorPrefs.GetString("Addr2Line_LogFilePath");
+            _addr2LinePath = EditorPrefs.GetString("Addr2Line_Addr2LinePath");
+        }
+
+        private void OnDestroy()
+        {
+            EditorPrefs.SetString("Addr2Line_SOFilePath", _soFilePath);
+            EditorPrefs.SetString("Addr2Line_LogFilePath", _logFilePath);
+            EditorPrefs.SetString("Addr2Line_Addr2LinePath", _addr2LinePath);
         }
 
         void OnGUI()
