@@ -26,9 +26,11 @@ namespace EBA.Ebunieditor.Editor.Common
         public string Vector4Fmt = "({0:F2}, {1:F2}, {2:F2}), {3:F2}";
         public string Vector3Fmt = "({0:F2}, {1:F2}, {2:F2})";
         public string Vector2Fmt = "({0:F2}, {1:F2})";
+        public bool isAutoPingClick = false;
 
         [Header("Inspector相关")] 
         public bool isShowQuickComponent = true;
         public bool isShowRectTransformExtension = true;
+        public bool isShowTextureImporterExtension = true;
     }
 }

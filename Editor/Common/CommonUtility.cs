@@ -12,21 +12,143 @@ namespace EBA.Ebunieditor.Editor.Common
 {
     public partial class CommonUtility
     {
-        
+        public static bool SetSpriteImporter(string path, string tag, TextureImporterFormat androidFormat,
+            TextureImporterFormat iosFormat, int perUnit)
+        {
+            AssetImporter im = AssetImporter.GetAtPath(path);
+            bool isRei = false;
+            if (im as TextureImporter)
+            {
+                var tIm = im as TextureImporter;
+                var androidSettings = tIm.GetPlatformTextureSettings("Android");
+                if (androidSettings.format != androidFormat)
+                {
+                    isRei = true;
+                    androidSettings.format = androidFormat;
+                }
+
+                if (!androidSettings.overridden)
+                {
+                    isRei = true;
+                    androidSettings.overridden = true;
+                }
+
+                if (androidSettings.compressionQuality != 100)
+                {
+                    isRei = true;
+                    androidSettings.compressionQuality = 100;
+                }
+
+                tIm.SetPlatformTextureSettings(androidSettings);
+                var iosSettings = tIm.GetPlatformTextureSettings("iPhone");
+                if (iosSettings.format != iosFormat)
+                {
+                    iosSettings.format = iosFormat;
+                    isRei = true;
+                }
+
+                
+                if (!iosSettings.overridden)
+                {
+                    isRei = true;
+                    iosSettings.overridden = true;
+                }
+
+                if (tIm.spritePackingTag != tag)
+                {
+                    tIm.spritePackingTag = tag;
+                    isRei = true;
+                }
+
+                if (tIm.textureType != TextureImporterType.Sprite)
+                {
+                    tIm.textureType = TextureImporterType.Sprite;
+                    isRei = true;
+                }
+
+                if ((int) tIm.spritePixelsPerUnit != perUnit)
+                {
+                    tIm.spritePixelsPerUnit = perUnit;
+                    isRei = true;
+                }
+                tIm.SetPlatformTextureSettings(iosSettings);
+                if (isRei)
+                    tIm.SaveAndReimport();
+            }
+
+            return isRei;
+        }
+
+        public static bool SetTexture2DFormat(string path,
+            TextureImporterFormat androidFormat = TextureImporterFormat.ASTC_6x6,
+            TextureImporterFormat iosFormat = TextureImporterFormat.ASTC_6x6)
+        {
+            AssetImporter im = AssetImporter.GetAtPath(path);
+            bool isRei = false;
+            if (im as TextureImporter)
+            {
+                var tIm = im as TextureImporter;
+                var androidSettings = tIm.GetPlatformTextureSettings("Android");
+                if (androidSettings.format != androidFormat)
+                {
+                    isRei = true;
+                    androidSettings.format = androidFormat;
+                }
+
+                if (!androidSettings.overridden)
+                {
+                    isRei = true;
+                    androidSettings.overridden = true;
+                }
+
+                if (androidSettings.compressionQuality != 100)
+                {
+                    isRei = true;
+                    androidSettings.compressionQuality = 100;
+                }
+
+                tIm.SetPlatformTextureSettings(androidSettings);
+                var iosSettings = tIm.GetPlatformTextureSettings("iPhone");
+                if (iosSettings.format != iosFormat)
+                {
+                    iosSettings.format = iosFormat;
+                    isRei = true;
+                }
+
+                tIm.SetPlatformTextureSettings(iosSettings);
+                if (!iosSettings.overridden)
+                {
+                    isRei = true;
+                    iosSettings.overridden = true;
+                }
+
+                if (tIm.textureType != TextureImporterType.Sprite)
+                {
+                    tIm.textureType = TextureImporterType.Sprite;
+                    isRei = true;
+                }
+
+                if (isRei)
+                    tIm.SaveAndReimport();
+            }
+
+            return isRei;
+        }
+
         public static T AttachUniqueComponent<T>(GameObject go) where T : Component
         {
             if ((UnityEngine.Object) null == (UnityEngine.Object) go)
-                return default (T);
+                return default(T);
             T obj = go.GetComponent<T>();
             if ((UnityEngine.Object) null == (UnityEngine.Object) obj)
                 obj = go.AddComponent<T>();
             return obj;
         }
-        
+
         public const BindingFlags BindFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
-        private static void ClearProgress()
+        public static void ClearProgress()
         {
             EditorUtility.ClearProgressBar();
         }
@@ -39,7 +161,7 @@ namespace EBA.Ebunieditor.Editor.Common
         public static void UpdateProgress(int progress, int progressMax, string desc)
         {
             var title = "Processing...[" + progress + " - " + progressMax + "]";
-            var value = progress / (float)progressMax;
+            var value = progress / (float) progressMax;
             EditorUtility.DisplayProgressBar(title, desc, value);
         }
 
@@ -59,7 +181,7 @@ namespace EBA.Ebunieditor.Editor.Common
                 BindingFlags.Instance | BindingFlags.Public |
                 BindingFlags.NonPublic);
             // ReSharper disable once PossibleNullReferenceException
-            sizeSelectionCallbackMethod.Invoke(window, new object[] { index, null });
+            sizeSelectionCallbackMethod.Invoke(window, new object[] {index, null});
         }
 
         public static void SetGameView(int width, int height, string baseText = "",
@@ -78,20 +200,20 @@ namespace EBA.Ebunieditor.Editor.Common
             var curGroupType = getCurrentGroupTypeMethod.Invoke(gameViewSizesInstance, new object[] { });
 
             // ReSharper disable once PossibleNullReferenceException
-            var group = getGroupMethod.Invoke(gameViewSizesInstance, new object[] { (int)curGroupType });
+            var group = getGroupMethod.Invoke(gameViewSizesInstance, new object[] {(int) curGroupType});
             var getTotalCountMethod = group.GetType().GetMethod("GetTotalCount", BindFlags);
             // ReSharper disable once PossibleNullReferenceException
-            var count = (int)getTotalCountMethod.Invoke(group, null);
+            var count = (int) getTotalCountMethod.Invoke(group, null);
 
             for (var i = 0; i < count; i++)
             {
                 // ReSharper disable once PossibleNullReferenceException
                 var viewSize = group.GetType().GetMethod("GetGameViewSize", BindFlags)
-                    .Invoke(group, new object[] { i });
+                    .Invoke(group, new object[] {i});
                 // ReSharper disable once PossibleNullReferenceException
-                var sWidth = (int)viewSize.GetType().GetField("m_Width", BindFlags).GetValue(viewSize);
+                var sWidth = (int) viewSize.GetType().GetField("m_Width", BindFlags).GetValue(viewSize);
                 // ReSharper disable once PossibleNullReferenceException
-                var sHeight = (int)viewSize.GetType().GetField("m_Height", BindFlags).GetValue(viewSize);
+                var sHeight = (int) viewSize.GetType().GetField("m_Height", BindFlags).GetValue(viewSize);
                 if (width == sWidth && sHeight == height)
                 {
                     SetGameView(i);
@@ -100,7 +222,7 @@ namespace EBA.Ebunieditor.Editor.Common
             }
 
             var param = new object[4];
-            param[0] = (int)sizeType;
+            param[0] = (int) sizeType;
             param[1] = width;
             param[2] = height;
             param[3] = string.IsNullOrEmpty(baseText) ? "" + width + "x" + height : baseText;
@@ -109,7 +231,7 @@ namespace EBA.Ebunieditor.Editor.Common
                 null,
                 null);
             // ReSharper disable once PossibleNullReferenceException
-            group.GetType().GetMethod("AddCustomSize").Invoke(group, new[] { size });
+            group.GetType().GetMethod("AddCustomSize").Invoke(group, new[] {size});
             SetGameView(count);
         }
 
@@ -140,25 +262,25 @@ namespace EBA.Ebunieditor.Editor.Common
             var method = obj.GetMethod("FindProperty", BindFlags);
 
             // ReSharper disable once PossibleNullReferenceException
-            var property = method.Invoke(obj, new object[] { "androidSplashScreen" }) as SerializedProperty;
+            var property = method.Invoke(obj, new object[] {"androidSplashScreen"}) as SerializedProperty;
             // ReSharper disable once PossibleNullReferenceException
             property.serializedObject.Update();
             property.objectReferenceValue = tex;
             property.serializedObject.ApplyModifiedProperties();
 
-            property = method.Invoke(obj, new object[] { "iOSLaunchScreenPortrait" }) as SerializedProperty;
+            property = method.Invoke(obj, new object[] {"iOSLaunchScreenPortrait"}) as SerializedProperty;
             // ReSharper disable once PossibleNullReferenceException
             property.serializedObject.Update();
             property.objectReferenceValue = tex;
             property.serializedObject.ApplyModifiedProperties();
 
-            property = method.Invoke(obj, new object[] { "m_VirtualRealitySplashScreen" }) as SerializedProperty;
+            property = method.Invoke(obj, new object[] {"m_VirtualRealitySplashScreen"}) as SerializedProperty;
             // ReSharper disable once PossibleNullReferenceException
             property.serializedObject.Update();
             property.objectReferenceValue = tex;
             property.serializedObject.ApplyModifiedProperties();
 
-            property = method.Invoke(obj, new object[] { "iOSLaunchScreenLandscape" }) as SerializedProperty;
+            property = method.Invoke(obj, new object[] {"iOSLaunchScreenLandscape"}) as SerializedProperty;
             // ReSharper disable once PossibleNullReferenceException
             property.serializedObject.Update();
             property.objectReferenceValue = tex;
@@ -349,6 +471,22 @@ namespace EBA.Ebunieditor.Editor.Common
         }
 
         #endregion
+        
+        [MenuItem(MenuKey.DEVELOPER_MODE)]
+        private static void ToggleDevMode()
+        {
+            // 切换 Developer Mode 状态
+            var isDevModeOn = !EditorPrefs.GetBool("DeveloperMode", false);
+            EditorPrefs.SetBool("DeveloperMode", isDevModeOn);
+            Menu.SetChecked(MenuKey.DEVELOPER_MODE, isDevModeOn);
+        }
+        
+        [MenuItem(MenuKey.DEVELOPER_MODE, true)]
+        private static bool ToggleDevModeValidate()
+        {
+            Menu.SetChecked(MenuKey.DEVELOPER_MODE, EditorPrefs.GetBool("DeveloperMode", false));
+            return true; // 始终返回true以确保菜单项总是可用
+        }
 
         public static List<string> GetSelectionAssetPaths(bool filterMeta = false)
         {
@@ -436,12 +574,12 @@ namespace EBA.Ebunieditor.Editor.Common
                 {
                     if (countFunc != null)
                     {
-                        int count = (int)countFunc.Invoke(colorLibInstance, null);
+                        int count = (int) countFunc.Invoke(colorLibInstance, null);
                         for (int i = 0; i < count; ++i)
                         {
                             if (getPresetFunc != null)
                             {
-                                Color col = (Color)getPresetFunc.Invoke(colorLibInstance, new Object[1] { i });
+                                Color col = (Color) getPresetFunc.Invoke(colorLibInstance, new Object[1] {i});
                                 colors.Add(col);
                             }
                         }
@@ -453,18 +591,18 @@ namespace EBA.Ebunieditor.Editor.Common
 
             return colors;
         }
-        
+
         // 使用自定义格式化
         public static string FormatVector3(Vector3 vector, string format = "({0:F2}, {1:F2}, {2:F2})")
         {
             return string.Format(format, vector.x, vector.y, vector.z);
         }
-        
+
         public static string FormatVector2(Vector2 vector, string format = "({0:F2}, {1:F2})")
         {
             return string.Format(format, vector.x, vector.y);
         }
-        
+
         public static string FormatVector4(Vector4 vector, string format = "({0:F2}, {1:F2}, {2:F2}, {3:F3})")
         {
             return string.Format(format, vector.x, vector.y, vector.z, vector.w);

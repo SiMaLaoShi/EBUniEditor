@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
+using EBA.Ebunieditor.Editor.Common;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -52,27 +53,27 @@ namespace EmmyLua
             set { EditorPrefs.SetBool(KEY_EMMY_SERVICE_ENABLE, value); }
         }
 
-        [MenuItem("Lua/EmmyLua/Enable")]
+        [MenuItem(MenuKey.EMMYLUA_ENABLE)]
         static void EnableService()
         {
             IsEnable = true;
             StartConnect();
         }
 
-        [MenuItem("Lua/EmmyLua/Enable", true)]
+        [MenuItem(MenuKey.EMMYLUA_ENABLE, true)]
         static bool EnableServiceCheck()
         {
             return !IsEnable;
         }
 
-        [MenuItem("Lua/EmmyLua/Disable")]
+        [MenuItem(MenuKey.EMMYLUA_DISABLE)]
         static void DisableService()
         {
             IsEnable = false;
             Stop();
         }
 
-        [MenuItem("Lua/EmmyLua/Disable", true)]
+        [MenuItem(MenuKey.EMMYLUA_DISABLE, true)]
         static bool DisableServiceCheck()
         {
             return IsEnable;

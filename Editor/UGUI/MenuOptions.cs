@@ -478,37 +478,25 @@ namespace UnityEditor.UI
         
         #region UGUI 类似PS的移动，ijkl，
 
-#if UNITY_2017_1_OR_NEWER
-        private const string up = "UGUI/Move/MoveUp %i";
-        private const string down = "UGUI/Move/MoveDown %k";
-        private const string left = "UGUI/Move/MoveLeft %j";
-        private const string right = "UGUI/Move/MoveRight %l";
-#else
-        private const string up = "GameObject/Move/MoveUp &UP";
-        private const string down = "GameObject/Move/MoveDown &DOWN";
-        private const string left = "GameObject/Move/MoveLeft &LEFT";
-        private const string right = "GameObject/Move/MoveRight &RIGHT";
-#endif
-
-        [MenuItem(up, false, 10)]
+        [MenuItem(MenuKey.UGUI_MOVE_UP, false, 10)]
         public static void MoveUp()
         {
             Move(Vector3.up);
         }
 
-        [MenuItem(down, false, 10)]
+        [MenuItem(MenuKey.UGUI_MOVE_DOWN, false, 10)]
         public static void MoveDown()
         {
             Move(Vector3.down);
         }
 
-        [MenuItem(left, false, 10)]
+        [MenuItem(MenuKey.UGUI_MOVE_LEFT, false, 10)]
         public static void MoveLeft()
         {
             Move(Vector3.left);
         }
 
-        [MenuItem(right, false, 10)]
+        [MenuItem(MenuKey.UGUI_MOVE_RIGHT, false, 10)]
         public static void MoveRight()
         {
             Move(Vector3.right);
