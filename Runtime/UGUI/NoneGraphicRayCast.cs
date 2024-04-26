@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//注：unity3dUGUI空对象实现射线检测  
-//参考 https://blog.csdn.net/weixin_33943347/article/details/89591903
 namespace EBA.Runtime.UGUI
 {
     [RequireComponent(typeof(CanvasRenderer))]
-    public class NoDrawingRayCast : Graphic
+    public class NoneGraphicRayCast : Graphic
     {
-        protected NoDrawingRayCast()
+        protected NoneGraphicRayCast()
         {
             useLegacyMeshGeneration = false;
         }
