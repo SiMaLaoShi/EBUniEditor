@@ -26,8 +26,6 @@ namespace UnityEditor.UI
         // Unity 2017.4.25f1 (64-bit) 2017的基本上能适用
         // Text
         private const string TEXTKEY = "GameObject/UI/My/Text %#&t";
-        private const string TEXT1KEY = "GameObject/UI/My/Text(Russo) %#&t";
-        private const string TEXT2KEY = "GameObject/UI/My/Text(思源) %#&t";
 
         // Image
         private const string IMAGEKEY = "GameObject/UI/My/Image %#&i";
@@ -189,10 +187,7 @@ namespace UnityEditor.UI
             var go = DefaultControls.CreateImage(GetStandardResources());
             go.name = "@ImgMask";
             go.GetComponent<Image>().raycastTarget = true;
-            go.GetComponent<Image>().sprite =
-                AssetDatabase.LoadAssetAtPath<Sprite>(
-                    @"Assets/AssetFolder/GUIAsset/Textures/CommonImg/Common_zhezhao_quanping.png");
-            var tr = command.context as Transform;
+            go.GetComponent<Image>().color = GlobalScriptableObject.instance.maskColor;
             PlaceUIElementRoot(go, command);
             go.transform.SetSiblingIndex(0);
 
@@ -209,34 +204,6 @@ namespace UnityEditor.UI
             var go = DefaultControls.CreateText(GetStandardResources());
             InitText(go.GetComponent<Text>());
             go.name = "Txt_";
-            PlaceUIElementRoot(go, menuCommand);
-            //go.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 100);
-            var ContentSizeFitter = go.AddComponent<ContentSizeFitter>();
-            ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-            ContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        }
-        
-        [MenuItem(TEXT1KEY, false, 1001)]
-        public static void AddText1(MenuCommand menuCommand)
-        {
-            var go = DefaultControls.CreateText(GetStandardResources());
-            InitText(go.GetComponent<Text>());
-            go.name = "Txt_";
-            go.GetComponent<Text>().font = AssetDatabase.LoadAssetAtPath<Font>("Assets/locale/en-us/AssetFolder/GUIAsset/Fonts/russoone.woff.ttf");
-            PlaceUIElementRoot(go, menuCommand);
-            //go.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 100);
-            var ContentSizeFitter = go.AddComponent<ContentSizeFitter>();
-            ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-            ContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        }
-        
-        [MenuItem(TEXT2KEY, false, 1001)]
-        public static void AddText2(MenuCommand menuCommand)
-        {
-            var go = DefaultControls.CreateText(GetStandardResources());
-            InitText(go.GetComponent<Text>());
-            go.name = "Txt_";
-            go.GetComponent<Text>().font = AssetDatabase.LoadAssetAtPath<Font>("Assets/AssetFolder/GUIAsset/Fonts/SourceHanSansSC-Bold.otf");
             PlaceUIElementRoot(go, menuCommand);
             //go.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 100);
             var ContentSizeFitter = go.AddComponent<ContentSizeFitter>();

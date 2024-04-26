@@ -27,6 +27,7 @@ namespace EBA.Ebunieditor.Editor.Common
         public string Vector3Fmt = "({0:F2}, {1:F2}, {2:F2})";
         public string Vector2Fmt = "({0:F2}, {1:F2})";
         public bool isAutoPingClick = false;
+        public Color maskColor = Color.gray; 
 
         [Header("Inspector相关")] 
         public bool isShowQuickComponent = true;
