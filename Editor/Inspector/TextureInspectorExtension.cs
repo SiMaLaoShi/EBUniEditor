@@ -50,8 +50,10 @@ namespace EBUniEditor.Editor.Inspector
         private void DrawOtherButton()
         {
             EditorGUILayout.BeginVertical();
-            if (GUILayout.Button("设置压缩格式（Sprite ASTC_6x6）"))
-                SetSpriteCompress();
+            if (GUILayout.Button("设置压缩格式（Sprite ASTC_6x6 Pixels69）"))
+                SetSpriteCompress(69);
+            if (GUILayout.Button("设置压缩格式（Sprite ASTC_6x6 Pixels65）"))
+                SetSpriteCompress(65);
             if (GUILayout.Button("设置压缩格式（Texture2D ASTC_6x6）"))
                 SetSpineTexture2DCompress();
             if (GUILayout.Button("设置压缩格式（Texture2D ASTC_5x5）"))
@@ -59,7 +61,7 @@ namespace EBUniEditor.Editor.Inspector
             EditorGUILayout.EndVertical();
         }
 
-        private void SetSpriteCompress()
+        private void SetSpriteCompress(int perUnit = 69)
         {
             var guids = Selection.assetGUIDs;
             var count = 0;
@@ -68,7 +70,7 @@ namespace EBUniEditor.Editor.Inspector
                 var imp = AssetImporter.GetAtPath(AssetDatabase.GUIDToAssetPath(guid)) as TextureImporter;
                 CommonUtility.SetSpriteImporter(AssetDatabase.GUIDToAssetPath(guid), imp.spritePackingTag,
                     TextureImporterFormat.ASTC_6x6,
-                    TextureImporterFormat.ASTC_6x6, 69);
+                    TextureImporterFormat.ASTC_6x6, perUnit);
                 EditorUtility.DisplayProgressBar(guid, AssetDatabase.GUIDToAssetPath(guid),
                     (float) ++count / guids.Length);
             }

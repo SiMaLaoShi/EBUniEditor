@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace EBA.Ebunieditor.Editor.CustomInspector
 {
-    [CustomEditor(typeof(TextureImporter))]
-    [CanEditMultipleObjects]
+    // [CustomEditor(typeof(TextureImporter))]
+    // [CanEditMultipleObjects]
     internal class CusTextureInspector : TextureImporterInspector
     {
         private SerializedProperty m_SpritePackingTagProperty;

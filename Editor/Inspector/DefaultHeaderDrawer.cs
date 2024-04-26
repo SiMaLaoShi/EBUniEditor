@@ -55,32 +55,51 @@ public static class DefaultHeaderDrawer
         menu.ShowAsContext();
     }
     
+    private static bool AreComponentValuesEqual(Component a, Component b)
+    {
+        if (a.GetType() != b.GetType())
+            return false;
+        return a == b;
+    }
+    
     private static void ShowPasteComponentList(GameObject obj)
     {
         GenericMenu menu = new GenericMenu();
-        var components = obj.GetComponents(typeof(Component)).ToList();
+        // 获取obj上所有组件的类型列表
+        var existingComponents = obj.GetComponents<Component>().ToList();
+
         foreach (var kv in srcComponentsDic)
         {
-            menu.AddItem(new GUIContent(kv.Key.Name), components.Contains(kv.Value), (data =>
+            // 检查obj是否已有具有相同值的组件实例
+            var existingComponent = existingComponents.FirstOrDefault(c => AreComponentValuesEqual(c, kv.Value));
+            var on = existingComponent != null;
+
+            menu.AddItem(new GUIContent(kv.Key.Name), on, (data =>
             {
-                var com = data as Component;
-                if (com == null)
+                var comType = data as Type;
+                if (comType == null)
                     return;
-                if (!components.Contains(kv.Value))
+
+                var srcComponent = kv.Value;
+
+                if (!existingComponents.Any(c => c.GetType() == comType))
                 {
-                    ComponentUtility.CopyComponent(kv.Value);
-                    foreach (var c in components)
-                    {
-                        if (c.GetType() == data.GetType())
-                        {
-                            ComponentUtility.PasteComponentValues(c);
-                            return;
-                        }
-                    }
+                    // 如果没有该类型的组件，则粘贴一个新的组件到obj上
+                    ComponentUtility.CopyComponent(srcComponent);
                     ComponentUtility.PasteComponentAsNew(obj);
                 }
-                    
-            }), kv.Value);
+                else
+                {
+                    // 如果obj已有该类型的组件但值不同，则粘贴组件值
+                    var destComponent = obj.GetComponent(comType);
+                    if (destComponent != null)
+                    {
+                        ComponentUtility.CopyComponent(srcComponent);
+                        ComponentUtility.PasteComponentValues(destComponent);
+                        Debug.Log($"srcComponent == destComponent {srcComponent == destComponent}");
+                    }
+                }
+            }), kv.Key);
         }
         menu.ShowAsContext();
     }
