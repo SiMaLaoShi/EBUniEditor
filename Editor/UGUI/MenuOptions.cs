@@ -1,5 +1,4 @@
 ﻿using EBA.Ebunieditor.Editor.Common;
-using EBA.Runtime.UGUI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -421,7 +420,6 @@ namespace UnityEditor.UI
             if (go.transform.parent as RectTransform)
             {
                 CommonUtility.AttachUniqueComponent<Button>(go);
-                CommonUtility.AttachUniqueComponent<NoneGraphicRayCast>(go);
                 CommonUtility.AttachUniqueComponent<CanvasRenderer>(go);
             }
 

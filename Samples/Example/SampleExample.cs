@@ -23,8 +23,7 @@ namespace EBA.Ebunieditor
         /// </summary>
         public void CountThingsAndDoStuffAndOutputIt()
         {
-            var result = new MyPublicRuntimeExampleClass().CountThingsAndDoStuff(1, 2, false);
-            Debug.Log("Call CountThingsAndDoStuffAndOutputIt returns " + result);
+          
         }
     }
 }
