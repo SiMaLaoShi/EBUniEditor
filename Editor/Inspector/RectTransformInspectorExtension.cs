@@ -15,10 +15,23 @@ namespace EBUniEditor.Editor.Inspector
         bool mIsLockedScalingRatio;
         bool mIsBoundEditorUpdate;
 
+        protected override void OnEnable()
+        {
+            if (target == null)
+                return;
+            base.OnEnable();
+        }
+
+        private void OnDisable()
+        {
+            if (target == null)
+                return;
+            base.OnEnable();
+        }
 
         void OnDestroy()
         {
-            EditorApplication.update -= OnEditorApplicationUpdate;
+            // EditorApplication.update -= OnEditorApplicationUpdate;
         }
         
         protected override UnityProvideEditorType EditorType => UnityProvideEditorType.RectTransformEditor;
