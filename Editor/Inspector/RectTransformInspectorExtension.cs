@@ -27,8 +27,6 @@ namespace EBUniEditor.Editor.Inspector
 
 			if ( rectTransform == null ) return;
 
-			var oldEnabled = GUI.enabled;
-
 			/*using ( new EditorGUILayout.HorizontalScope( EditorStyles.helpBox ) )
 			{
 				GUI.enabled = rectTransform.localRotation != Quaternion.identity;
@@ -87,46 +85,29 @@ namespace EBUniEditor.Editor.Inspector
 					rectTransform.localScale    = rectTransform.localScale.Round();
 				}
 			}*/
-			
-			if (GlobalScriptableObject.instance.isShowRectTransformExtension) 
-				DrawRectTransformInspectorExtension();
 
-			var creator = new ComponentButtonCreator( rectTransform.gameObject );
-
-			using ( new EditorGUILayout.HorizontalScope( EditorStyles.helpBox ) )
+			if (GlobalScriptableObject.instance.isShowRectTransformExtension)
 			{
-				creator.Create<CanvasGroup, CanvasGroup>( "CanvasGroup Icon" );
-				creator.Create<HorizontalLayoutGroup, LayoutGroup>( "HorizontalLayoutGroup Icon" );
-				creator.Create<VerticalLayoutGroup, LayoutGroup>( "VerticalLayoutGroup Icon" );
-				creator.Create<GridLayoutGroup, LayoutGroup>( "GridLayoutGroup Icon" );
-				creator.Create<ContentSizeFitter, ContentSizeFitter>( "ContentSizeFitter Icon" );
-			}
+				DrawRectTransformInspectorExtension();
+				var creator = new ComponentButtonCreator( rectTransform.gameObject );
+				var oldEnabled = GUI.enabled;
+				using ( new EditorGUILayout.HorizontalScope( EditorStyles.helpBox ) )
+				{
+					creator.Create<CanvasGroup, CanvasGroup>( "CanvasGroup Icon" );
+					creator.Create<HorizontalLayoutGroup, LayoutGroup>( "HorizontalLayoutGroup Icon" );
+					creator.Create<VerticalLayoutGroup, LayoutGroup>( "VerticalLayoutGroup Icon" );
+					creator.Create<GridLayoutGroup, LayoutGroup>( "GridLayoutGroup Icon" );
+					creator.Create<ContentSizeFitter, ContentSizeFitter>( "ContentSizeFitter Icon" );
+				}
 
-			GUI.enabled = oldEnabled;
+				GUI.enabled = oldEnabled;
+			}
 		}
 		
 		void DrawRectTransformInspectorExtension()
         {
-            var lineStyle = new GUIStyle();
-            lineStyle.normal.background = EditorGUIUtility.whiteTexture;
-            lineStyle.stretchWidth = true;
-            lineStyle.margin = new RectOffset(0, 0, 7, 7);
-
-            var c = GUI.color;
-            var p = GUILayoutUtility.GetRect(GUIContent.none, lineStyle, GUILayout.Height(1));
-            p.width -= 70;
-            if (Event.current.type == EventType.Repaint)
-            {
-                GUI.color = EditorGUIUtility.isProSkin
-                    ? new Color(0.157f, 0.157f, 0.157f)
-                    : new Color(0.5f, 0.5f, 0.5f);
-                lineStyle.Draw(p, false, false, false, false);
-            }
-
-            EditorGUI.LabelField(new Rect(p.xMax, p.y - 7, 70, 20), "Extensions");
-            GUI.color = c;
-
-            var concertTarget = target as RectTransform;
+	        GUILayout.Space(10);
+	        var concertTarget = target as RectTransform;
             if (null == concertTarget)
 	            return;
 
