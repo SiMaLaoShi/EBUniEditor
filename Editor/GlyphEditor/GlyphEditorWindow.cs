@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Object = UnityEngine.Object;
 
 namespace EBA.Ebunieditor.Editor.GlyphEditor
 {
@@ -59,6 +60,7 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
         }
 
         private GlyphInfoScriptableObject glyphInfoScriptableObject;
+        private Object targetDirObj;
 
         private void OnGUI()
         {
@@ -66,6 +68,11 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
             glyphInfoScriptableObject = (GlyphInfoScriptableObject) EditorGUILayout.ObjectField("Select Object:", glyphInfoScriptableObject, typeof(GlyphInfoScriptableObject), false);
             if (GUILayout.Button("编辑旧字体"))
             {
+                if (null == glyphInfoScriptableObject)
+                {
+                    Debug.LogError("没有选定旧字体");
+                    return;
+                }
                 glyphList.Clear();
                 glyphList = glyphInfoScriptableObject.GlyphInfos;
             }
@@ -91,8 +98,14 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
 
             GUILayout.EndScrollView();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("字体名字", GUILayout.Width(100));
-            fontName = GUILayout.TextField(fontName, GUILayout.Width(200));
+            GUILayout.Label("字体名字：");
+            fontName = GUILayout.TextField(fontName, GUILayout.Width(100));
+#if UNITY_2019_1_OR_NEWER
+            GUILayout.Label("保存文件夹：");
+            targetDirObj = EditorGUILayout.ObjectField(targetDirObj, typeof(DefaultAsset), false);
+#else
+            targetDirObj = EditorGUILayout.ObjectField("保存文件夹", targetDirObj, typeof(Object));
+#endif
             if (GUILayout.Button("生成"))
                 Run();
             GUILayout.EndHorizontal();
@@ -105,6 +118,12 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
             if (string.IsNullOrEmpty(fontName))
             {
                 Debug.LogError("没有输入字体名字");
+                return;
+            }
+
+            if (null == targetDirObj)
+            {
+                Debug.LogError("没有选定保存的文件夹");
                 return;
             }
 
@@ -137,7 +156,7 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
                     return;
                 }
 
-                var textureImporter = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(glyph.Sprite.texture));
+                var textureImporter = (TextureImporter) AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(glyph.Sprite.texture));
                 textureImporter.isReadable = true;
                 textureImporter.SaveAndReimport();
             }
@@ -154,7 +173,7 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
                     height = Mathf.Max(height, (int) glyph.Sprite.rect.height);
                 }
             }
-                
+
 
             // 创建一个新的Texture2D来容纳所有纹理
             //todo 这个可用SpritePack来合并纹理
@@ -213,21 +232,14 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
                     offsetX += (int) spriteRect.width;
                 }
             }
-            
+
             combinedTexture.Apply();
 
             var bytes = combinedTexture.EncodeToPNG();
-            if (!AssetDatabase.IsValidFolder("Assets/Fonts"))
-            {
-                AssetDatabase.CreateFolder("Assets", "Fonts");
-            }
 
-            if (!AssetDatabase.IsValidFolder($"Assets/Fonts/{fontName}"))
-            {
-                AssetDatabase.CreateFolder("Assets/Fonts", fontName);
-            }
+            var dir = Mkdir();
 
-            var filePath = Path.Combine(Environment.CurrentDirectory, $"Assets/Fonts/{fontName}/{fontName}.png");
+            var filePath = Path.Combine(Environment.CurrentDirectory, $"{dir}/{fontName}.png");
             if (!string.IsNullOrEmpty(filePath))
             {
                 File.WriteAllBytes(filePath, bytes);
@@ -237,7 +249,7 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
             var scriptableObject = CreateInstance<GlyphInfoScriptableObject>();
             scriptableObject.FontName = fontName;
             scriptableObject.GlyphInfos = glyphList;
-            AssetDatabase.CreateAsset(scriptableObject, $"Assets/Fonts/{fontName}/{fontName}.asset");
+            AssetDatabase.CreateAsset(scriptableObject, $"{dir}/{fontName}.asset");
             EditorUtility.SetDirty(scriptableObject);
             // 释放内存
             DestroyImmediate(combinedTexture);
@@ -245,38 +257,59 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            GenerateFont(height, glyphInfos);
-            
+            GenerateFont(height, glyphInfos, dir);
+
             for (var i = 0; i < glyphList.Count; i++)
             {
                 var glyph = glyphList[i];
-                var textureImporter = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(glyph.Sprite.texture));
+                var textureImporter = (TextureImporter) AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(glyph.Sprite.texture));
                 textureImporter.isReadable = false;
                 textureImporter.SaveAndReimport();
             }
+        }
+
+        private string Mkdir()
+        {
+            var dirPath = AssetDatabase.GetAssetPath(targetDirObj);
+
+            if (!AssetDatabase.IsValidFolder(dirPath))
+            {
+                dirPath = "Assets/Fonts";
+                if (!AssetDatabase.IsValidFolder(dirPath))
+                {
+                    AssetDatabase.CreateFolder("Assets", "Fonts");
+                }
+            }
+
+            if (!AssetDatabase.IsValidFolder($"{dirPath}/{fontName}"))
+            {
+                AssetDatabase.CreateFolder(dirPath, fontName);
+            }
+
+            return Path.Combine(dirPath, fontName);
         }
 
         private void GenerateAtlas()
         {
         }
 
-        private void GenerateFont(float height, List<GlyphInfo> glyphInfos)
+        private void GenerateFont(float height, List<GlyphInfo> glyphInfos, string dir)
         {
             var font = new Font(fontName);
             var mat = new Material(Shader.Find("GUI/Text Shader"));
-            var textureImporter = (TextureImporter) AssetImporter.GetAtPath($"Assets/Fonts/{fontName}/{fontName}.png");
+            var textureImporter = (TextureImporter) AssetImporter.GetAtPath($"{dir}/{fontName}.png");
             textureImporter.textureType = TextureImporterType.GUI;
             textureImporter.SaveAndReimport();
-            var fontTexture = AssetDatabase.LoadAssetAtPath<Texture>($"Assets/Fonts/{fontName}/{fontName}.png");
+            var fontTexture = AssetDatabase.LoadAssetAtPath<Texture>($"{dir}/{fontName}.png");
             mat.SetTexture(s_MainTex, fontTexture);
-            AssetDatabase.CreateAsset(mat, $"Assets/Fonts/{fontName}/{fontName}.mat");
+            AssetDatabase.CreateAsset(mat, $"{dir}/{fontName}.mat");
 
             var so = new SerializedObject(font);
             var p = so.FindProperty("m_LineSpacing");
             p.floatValue = height;
             so.ApplyModifiedProperties();
 
-            AssetDatabase.CreateAsset(font, $"Assets/Fonts/{fontName}/{fontName}.fontsettings");
+            AssetDatabase.CreateAsset(font, $"{dir}/{fontName}.fontsettings");
             font.material = mat;
             font.characterInfo = SetCharacterInfo(glyphInfos);
 
