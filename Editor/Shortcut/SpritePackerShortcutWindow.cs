@@ -11,7 +11,7 @@ namespace EBA.Ebunieditor.Editor.Shortcut
     /// </summary>
     public class SpritePackerShortcutWindow : EditorWindow
     {
-        [MenuItem("Window/SpritePackerShortcutWindow", false, 101)]
+        [MenuItem("Window/EBAWindow/SpritePackerShortcutWindow", false, 101)]
         static void ShowWindow()
         {
             var wnd = GetWindow<SpritePackerShortcutWindow>();

@@ -47,7 +47,7 @@ namespace EBA.Ebunieditor.Editor.Shortcut
         private static List<string> s_assemblies = new List<string>();
         private static Page s_page = Page.Shortcuts;
 
-        [MenuItem("Window/ShortcutWindow", false, 100)]
+        [MenuItem("Window/EBAWindow/ShortcutWindow", false, 100)]
         private static void Init()
         {
             if (s_window == null)
