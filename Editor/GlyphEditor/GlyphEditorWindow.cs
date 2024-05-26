@@ -75,6 +75,7 @@ namespace EBA.Ebunieditor.Editor.GlyphEditor
                 }
                 glyphList.Clear();
                 glyphList = glyphInfoScriptableObject.GlyphInfos;
+                fontName = glyphInfoScriptableObject.FontName;
             }
 
             GUILayout.EndHorizontal();
