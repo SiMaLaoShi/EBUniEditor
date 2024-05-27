@@ -17,7 +17,7 @@ using System.Collections.Specialized;
 using System.IO;
 
 
-namespace LitJson
+namespace EBA.LitJson
 {
     public class JsonData : IJsonWrapper, IEquatable<JsonData>
     {

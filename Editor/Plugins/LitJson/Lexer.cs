@@ -15,7 +15,7 @@ using System.IO;
 using System.Text;
 
 
-namespace LitJson
+namespace EBA.LitJson
 {
     internal class FsmContext
     {

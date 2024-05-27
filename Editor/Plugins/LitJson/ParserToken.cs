@@ -9,7 +9,7 @@
 #endregion
 
 
-namespace LitJson
+namespace EBA.LitJson
 {
     internal enum ParserToken
     {

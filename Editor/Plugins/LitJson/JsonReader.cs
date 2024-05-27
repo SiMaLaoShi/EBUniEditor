@@ -16,7 +16,7 @@ using System.IO;
 using System.Text;
 
 
-namespace LitJson
+namespace EBA.LitJson
 {
     public enum JsonToken
     {
