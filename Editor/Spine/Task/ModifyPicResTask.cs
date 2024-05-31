@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Text;
-using LitJson;
+using EBA.LitJson;
 using UnityEngine;
 
 namespace EBA.Ebunieditor.Editor.Spine.Task

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using LitJson;
+using EBA.LitJson;
 using Debug = UnityEngine.Debug;
 
 namespace EBA.Ebunieditor.Editor.Spine
