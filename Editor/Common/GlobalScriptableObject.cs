@@ -33,5 +33,8 @@ namespace EBA.Ebunieditor.Editor.Common
         public bool isShowQuickComponent = true;
         public bool isShowRectTransformExtension = true;
         public bool isShowTextureImporterExtension = true;
+
+        [Header("Hierarchy相关")] 
+        public bool isShowRectDrawer = false;
     }
 }
