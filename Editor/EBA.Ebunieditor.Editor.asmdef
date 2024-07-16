@@ -2,8 +2,9 @@
     "name": "EBA.Ebunieditor.Editor",
     "rootNamespace": "",
     "references": [
-        "EBA.Ebunieditor",
-        "LitJson"
+        "UnityEditor.UI",
+        "UnityEngine.UI",
+        "EBALitJson"
     ],
     "includePlatforms": [
         "Editor"

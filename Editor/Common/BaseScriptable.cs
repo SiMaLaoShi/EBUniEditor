@@ -6,6 +6,9 @@ namespace EBA.Ebunieditor.Editor.Common
     public class BaseScriptable<T>: ScriptableObject where T: ScriptableObject
     {
         private static T _instance;
+
+        public static T Instance => instance;
+
         public static T instance
         {
             get
