@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EBA.Ebunieditor.Editor.Common;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +18,14 @@ namespace EBUniEditor.Editor.Hierarchy
             SceneView.duringSceneGui += OnSceneGUI;
         }
 
+        private static bool IsMissComponent(GameObject go)
+        {
+            if (go == null)
+                return false;
+            var components = go.GetComponents<Component>();
+            return components.Any(component => component == null);
+        }
+
         private static void OnHierarchyGUI(int instanceID, Rect selectionRect)
         {
             if (!GlobalScriptableObject.instance.isShowRectDrawer)
@@ -33,10 +42,15 @@ namespace EBUniEditor.Editor.Hierarchy
             // 定义复选框的区域和状态
             var toggleRect = new Rect(selectionRect.x + selectionRect.width - 20, selectionRect.y, 18, selectionRect.height);
             var isSelected = selectedRects.ContainsKey(instanceID);
-
             // 绘制复选框
             var shouldBeSelected = GUI.Toggle(toggleRect, isSelected, GUIContent.none);
-
+            
+            if (IsMissComponent(obj))
+            {
+                var missRect = new Rect(selectionRect.x + selectionRect.width, selectionRect.y, 18, selectionRect.height);
+                GUI.Label(missRect, "⚠️");
+            }
+            
             if (shouldBeSelected == isSelected)
                 return;
             if (shouldBeSelected)
