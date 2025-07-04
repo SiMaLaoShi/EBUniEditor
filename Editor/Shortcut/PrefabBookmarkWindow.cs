@@ -47,13 +47,11 @@ namespace EBA.Ebunieditor.Editor.Shortcut
 
         private void OnDisable()
         {
-            SaveBookmark();
             prefabs = null;
         }
 
         private void OnDestroy()
         {
-            SaveBookmark();
             prefabs = null;
         }
 
