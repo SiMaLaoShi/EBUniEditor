@@ -337,6 +337,8 @@ namespace EBA.Ebunieditor.Editor.Shortcut
                                 }
                             }
                         }
+                        
+                        SaveBookmark();
                     }
 
                     break;
