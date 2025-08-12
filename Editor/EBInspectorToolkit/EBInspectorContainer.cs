@@ -589,9 +589,13 @@ namespace EBUniEditor.Editor.Inspector {
             placement.width = ToolBarButtonWidth; // 增加宽度以容纳中文文字
     
             // 使用中文文字内容
+            // GUIContent buttonContent = new GUIContent(
+            //     copy ? "复制" : "粘贴",
+            //     copy ? "复制选中的组件到剪贴板" : "从剪贴板粘贴组件"
+            // );
             GUIContent buttonContent = new GUIContent(
-                copy ? "复制" : "粘贴",
-                copy ? "复制选中的组件到剪贴板" : "从剪贴板粘贴组件"
+                copy ? "Copy" : "Paste",
+                copy ? "Copy selected components to clipboard" : "Paste components from clipboard"
             );
 
             bool pressed = GUI.Button(placement, buttonContent);
